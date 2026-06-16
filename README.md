@@ -1,9 +1,9 @@
 ﻿# CryptexQ-Aerospace 🚀
  
-Overview
+# Overview
 CryptexQ-Aerospace is an innovative project focused on integrating cryptographic security with aerospace systems. The repository explores secure communication, data integrity, and system monitoring in aerospace applications, leveraging modern cryptographic techniques and cloud integration.
 
-Features ✨
+# Features ✨
 🔐 Secure Communication Protocols for aerospace systems
 
 ☁️ Cloud Integration for real-time monitoring and data storage
@@ -14,7 +14,7 @@ Features ✨
 
 📊 Visualization Dashboards for mission-critical insights
 
-Tech Stack 🛠️
+# Tech Stack 🛠️
 Languages: Python, C/C++
 
 Frameworks: TensorFlow / PyTorch (for ML), Flask/Django (for APIs)
@@ -25,7 +25,7 @@ Database: MongoDB / PostgreSQL
 
 Tools: GitHub Actions, Docker, Kubernetes
 
-Installation ⚙️
+# Installation ⚙️
 Clone the repository:
 
 bash
@@ -39,7 +39,8 @@ Run the application:
 
 bash
 python main.py
-Usage 🚀
+
+# Usage 🚀
 Configure your cloud credentials in config.json.
 
 Deploy the system using Docker/Kubernetes for scalability.
