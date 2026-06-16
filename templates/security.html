@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>CryptexQ Security Center</title>
+
+<link rel="stylesheet" href="/static/style.css">
+
+<script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+
+<nav class="navbar">
+
+<div class="logo">CryptexQ</div>
+
+<ul class="navLinks">
+
+<li>
+<a href="/"
+style="color:#b7c6ff;text-decoration:none;">
+Home
+</a>
+</li>
+
+<li>Network</li>
+
+<li>
+<a href="/security"
+style="color:white;text-decoration:none;">
+Security
+</a>
+</li>
+
+<li>About</li>
+
+</ul>
+
+<button class="navBtn">
+Security Center
+</button>
+
+</nav>
+
+<!-- TITLE -->
+
+<h1 class="title">
+SECURITY OPERATIONS CENTER
+</h1>
+
+<!-- GRID -->
+
+<div class="grid" style="padding:20px;">
+
+<!-- THREAT LEVEL -->
+
+<div class="panel center">
+
+<h2>Threat Level</h2>
+
+<h1 id="threatLevel"
+style="color:#00ff99;">
+
+LOW
+
+</h1>
+
+</div>
+
+<!-- PACKET INTEGRITY -->
+
+<div class="panel center">
+
+<h2>Packet Integrity</h2>
+
+<h1 id="integrity"
+style="color:#00ff99;">
+
+VERIFIED
+
+</h1>
+
+</div>
+
+<!-- AI STATUS -->
+
+<div class="panel center">
+
+<h2>AI Threat Engine</h2>
+
+<h1 id="aiStatus"
+style="color:#00ff99;">
+
+NORMAL
+
+</h1>
+
+</div>
+
+<!-- AI ANALYSIS -->
+
+<div class="panel">
+
+<h2>AI Threat Analysis</h2>
+
+<p id="analysisText">
+
+Telemetry stable.<br><br>
+
+No anomalies detected.<br><br>
+
+Confidence: 99%
+
+</p>
+
+</div>
+
+<!-- SECURITY LAYERS -->
+
+<div class="panel">
+
+<h2>Security Layers</h2>
+
+<p>✔ AES-256-GCM ACTIVE</p>
+
+<p>✔ ML-KEM-512 ACTIVE</p>
+
+<p>✔ ECDSA VERIFIED</p>
+
+<p>✔ Isolation Forest AI ACTIVE</p>
+
+</div>
+
+<!-- NETWORK STATUS -->
+
+<div class="panel">
+
+<h2>Secure Network</h2>
+
+<div class="network">
+
+<div class="node">✈</div>
+
+<div class="link">
+<div class="packet"></div>
+</div>
+
+<div class="node">🛰</div>
+
+<div class="link">
+<div class="packet"></div>
+</div>
+
+<div class="node">🖥</div>
+
+</div>
+
+<p style="text-align:center;color:#b7c6ff;">
+
+Encrypted aerospace relay active
+
+</p>
+
+</div>
+
+</div>
+
+<!-- LOGS -->
+
+<div class="logs">
+
+<h2>MISSION THREAT LOGS</h2>
+
+<div id="logConsole">
+
+<div>
+[12:44:01] CryptexQ initialized
+</div>
+
+<div>
+[12:44:04] Hybrid cryptographic tunnel established
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+const socket =
+io("http://127.0.0.1:5050")
+
+function addLog(message){
+
+const box =
+document.getElementById("logConsole")
+
+const line =
+document.createElement("div")
+
+line.innerText =
+"[" + new Date().toLocaleTimeString() + "] "
++ message
+
+box.prepend(line)
+
+}
+
+socket.on("attack_detected", data => {
+
+document.getElementById("threatLevel")
+.innerText = "CRITICAL"
+
+document.getElementById("threatLevel")
+.style.color = "#ff4444"
+
+document.getElementById("integrity")
+.innerText = "COMPROMISED"
+
+document.getElementById("integrity")
+.style.color = "#ff4444"
+
+document.getElementById("aiStatus")
+.innerText = "ANOMALY DETECTED"
+
+document.getElementById("aiStatus")
+.style.color = "#ff4444"
+
+document.getElementById("analysisText")
+.innerHTML = `
+
+Telemetry anomaly detected.<br><br>
+
+Possible spoofing or MITM attack.<br><br>
+
+Confidence: 97%
+
+`
+
+addLog(data.msg)
+
+})
+
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>Attacker Console</title>
+<script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+</head>
+
+<body style="background:black;color:red;font-family:monospace;text-align:center;padding-top:100px">
+
+<h1>External Node Terminal</h1>
+<h2>Unauthorized Access Console</h2>
+
+<button onclick="attack()" style="padding:15px 30px;font-size:18px;">
+Launch MITM Attack
+</button>
+
+<button onclick="spoofTelemetry()"
+style="padding:15px 30px;font-size:18px;">
+
+Inject Telemetry Spoof
+
+</button>
+<script>
+
+const socket = io("http://127.0.0.1:5050");
+
+socket.on("connect", () => {
+console.log("Attacker connected to server");
+});
+
+function attack(){
+
+socket.emit("launch_attack");
+
+alert("Attack injected into network");
+
+}
+function spoofTelemetry(){
+
+    socket.emit("spoof_attack")
+
+    alert("Spoofed telemetry injected")
+
+}
+</script>
+
+</body>
+</html>

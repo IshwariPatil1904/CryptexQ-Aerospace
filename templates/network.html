@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>CryptexQ Network Map</title>
+
+<link rel="stylesheet" href="/static/style.css">
+
+<style>
+
+.mapContainer{
+
+position:relative;
+
+width:90%;
+
+height:600px;
+
+margin:20px auto;
+
+background:#081221;
+
+border:1px solid rgba(77,163,255,0.3);
+
+border-radius:12px;
+
+overflow:hidden;
+
+box-shadow:0 0 20px rgba(0,150,255,0.2);
+
+}
+
+/* WORLD MAP */
+
+.worldMap{
+
+position:absolute;
+
+width:100%;
+
+height:100%;
+
+object-fit:cover;
+
+opacity:0.28;
+
+}
+
+/* NODES */
+
+.node{
+
+position:absolute;
+
+width:18px;
+
+height:18px;
+
+border-radius:50%;
+
+background:#00eaff;
+
+box-shadow:0 0 15px #00eaff;
+
+z-index:10;
+
+}
+
+/* LABELS */
+
+.label{
+
+position:absolute;
+
+color:white;
+
+font-size:13px;
+
+font-weight:bold;
+
+}
+
+/* CONNECTIONS */
+
+.route{
+
+position:absolute;
+
+height:2px;
+
+background:#00eaff;
+
+transform-origin:left center;
+
+box-shadow:0 0 10px #00eaff;
+
+}
+
+/* MOVING PACKET */
+
+.packet{
+
+position:absolute;
+
+width:10px;
+
+height:10px;
+
+background:white;
+
+border-radius:50%;
+
+box-shadow:0 0 10px white;
+
+animation:packetMove 4s linear infinite;
+
+}
+
+@keyframes packetMove{
+
+0%{
+left:0%;
+}
+
+100%{
+left:100%;
+}
+
+}
+
+/* THREAT ZONE */
+
+.threat{
+
+position:absolute;
+
+width:120px;
+
+height:120px;
+
+border-radius:50%;
+
+background:rgba(255,0,0,0.15);
+
+border:2px solid rgba(255,0,0,0.6);
+
+animation:pulse 4s infinite;
+
+}
+
+@keyframes pulse{
+
+0%{
+transform:scale(1);
+opacity:0.4;
+}
+
+50%{
+transform:scale(1.1);
+opacity:1;
+}
+
+100%{
+transform:scale(1);
+opacity:0.4;
+}
+
+}
+
+.infoPanel{
+
+width:90%;
+
+margin:20px auto;
+
+display:grid;
+
+grid-template-columns:repeat(4,1fr);
+
+gap:15px;
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+<!-- NAVBAR -->
+
+<nav class="navbar">
+
+<div class="logo">CryptexQ</div>
+
+<ul class="navLinks">
+
+<li>
+<a href="/"
+style="color:#b7c6ff;text-decoration:none;">
+Home
+</a>
+</li>
+
+<li>
+<a href="/network"
+style="color:white;text-decoration:none;">
+Network
+</a>
+</li>
+
+<li>
+<a href="/security"
+style="color:#b7c6ff;text-decoration:none;">
+Security
+</a>
+</li>
+
+<li>
+<a href="/about"
+style="color:#b7c6ff;text-decoration:none;">
+About
+</a>
+</li>
+
+</ul>
+
+
+<button class="navBtn">
+Global Network
+</button>
+
+</nav>
+
+<h1 class="title">
+TACTICAL AEROSPACE NETWORK MAP
+</h1>
+
+<div id="networkAlert"
+style="
+width:90%;
+margin:10px auto;
+padding:15px;
+border-radius:10px;
+text-align:center;
+background:rgba(0,255,150,0.08);
+border:1px solid rgba(0,255,150,0.3);
+color:#00ff99;
+font-weight:bold;
+">
+
+SECURE COMMUNICATION CHANNEL ACTIVE
+
+</div>
+
+<!-- MAP -->
+
+<div class="mapContainer">
+
+<img
+class="worldMap"
+src="https://upload.wikimedia.org/wikipedia/commons/8/80/World_map_-_low_resolution.svg"
+>
+
+<!-- AIRCRAFT -->
+
+<div id="aircraftNode"
+class="node"
+style="top:42%;left:28%;"></div>
+
+<div class="label"
+style="top:45%;left:29%;">
+
+Aircraft AC102
+
+</div>
+
+<!-- SATELLITE -->
+
+<div class="node"
+style="top:28%;left:48%;
+background:#66ccff;"></div>
+
+<div class="label"
+style="top:31%;left:49%;">
+
+Satellite Relay
+
+</div>
+
+<!-- GROUND CONTROL -->
+
+<div class="node"
+style="top:50%;left:72%;
+background:#00ff99;"></div>
+
+<div class="label"
+style="top:53%;left:73%;">
+
+Ground Control
+
+</div>
+
+<!-- SECURE ROUTES -->
+
+<div id="route1"
+class="route"
+style="
+top:37%;
+left:30%;
+width:270px;
+transform:rotate(-18deg);
+">
+
+<div class="packet"></div>
+
+</div>
+
+<div id="route2"
+class="route"
+style="
+top:40%;
+left:49%;
+width:330px;
+transform:rotate(16deg);
+">
+
+<div class="packet"></div>
+
+</div>
+
+<!-- THREAT ZONE -->
+
+<div class="threat"
+style="
+top:20%;
+left:58%;
+">
+
+</div>
+
+</div>
+
+<!-- INFO PANELS -->
+
+<div class="infoPanel">
+
+<div class="metricCard">
+
+<h3>Network Status</h3>
+
+<p>SECURE</p>
+
+</div>
+
+<div class="metricCard">
+
+<h3>Active Nodes</h3>
+
+<p>3</p>
+
+</div>
+
+<div class="metricCard">
+
+<h3>Quantum Security</h3>
+
+<p>ENABLED</p>
+
+</div>
+
+<div class="metricCard">
+
+<h3>Threat Zones</h3>
+
+<p>1</p>
+
+</div>
+
+</div>
+<!-- SYSTEM ARCHITECTURE -->
+
+<div class="grid" style="padding:20px;">
+
+<!-- COMMUNICATION FLOW -->
+
+<div class="panel">
+
+<h2>Communication Flow</h2>
+
+<p>
+
+Aircraft generates telemetry packets which are
+encrypted before transmission.
+
+</p>
+
+<p>
+
+Encrypted telemetry is relayed through the
+satellite communication layer.
+
+</p>
+
+<p>
+
+Ground control decrypts and verifies telemetry
+integrity before processing.
+
+</p>
+
+</div>
+
+<!-- ENCRYPTION STACK -->
+
+<div class="panel">
+
+<h2>Implemented Encryption Stack</h2>
+
+<p>✔ AES-256-GCM Encryption</p>
+
+<p>✔ ECDH Key Exchange</p>
+
+<p>✔ HKDF Session Derivation</p>
+
+<p>✔ ML-KEM-512 Integration</p>
+
+<p>✔ ECDSA Authentication</p>
+
+</div>
+
+<!-- SECURITY CAPABILITIES -->
+
+<div class="panel">
+
+<h2>Security Capabilities</h2>
+
+<p>✔ MITM Attack Detection</p>
+
+<p>✔ Ciphertext Integrity Verification</p>
+
+<p>✔ Telemetry Spoof Detection</p>
+
+<p>✔ AI Anomaly Monitoring</p>
+
+</div>
+
+<!-- RELAY ARCHITECTURE -->
+
+<div class="panel">
+
+<h2>Relay Architecture</h2>
+
+<p>
+
+Aircraft acts as telemetry source node.
+
+</p>
+
+<p>
+
+Satellite operates as secure relay layer without
+decrypting transmitted telemetry.
+
+</p>
+
+<p>
+
+Ground station performs telemetry decryption and
+authentication verification.
+
+</p>
+
+</div>
+
+<!-- ATTACK SIMULATION -->
+
+<div class="panel">
+
+<h2>Attack Simulation Support</h2>
+
+<p>✔ MITM Injection</p>
+
+<p>✔ Ciphertext Tampering</p>
+
+<p>✔ Telemetry Spoofing</p>
+
+<p>✔ AI-Based Detection Response</p>
+
+</div>
+
+<!-- PROJECT OBJECTIVE -->
+
+<div class="panel">
+
+<h2>System Objective</h2>
+
+<p>
+
+CryptexQ demonstrates a secure aerospace telemetry
+framework using hybrid cryptography and AI-assisted
+anomaly detection for protecting aircraft
+communication systems against cyber attacks.
+
+</p>
+
+</div>
+
+</div>
+
+<script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+
+<script>
+
+const socket =
+io("http://127.0.0.1:5050")
+
+socket.on("attack_detected", data => {
+
+document.getElementById("networkAlert")
+.innerText = data.msg
+
+document.getElementById("networkAlert")
+.style.background =
+"rgba(255,0,0,0.12)"
+
+document.getElementById("networkAlert")
+.style.border =
+"1px solid rgba(255,0,0,0.4)"
+
+document.getElementById("networkAlert")
+.style.color =
+"#ff4444"
+
+// Turn routes red
+
+document.getElementById("route1")
+.style.background =
+"#ff4444"
+
+document.getElementById("route2")
+.style.background =
+"#ff4444"
+
+// Aircraft compromised visual
+
+document.getElementById("aircraftNode")
+.style.background =
+"#ff4444"
+
+document.getElementById("aircraftNode")
+.style.boxShadow =
+"0 0 20px #ff0000"
+
+})
+
+</script>
+
+</body>
+
+</html>

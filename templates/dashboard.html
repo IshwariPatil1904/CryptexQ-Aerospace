@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128/examples/js/loaders/GLTFLoader.js"></script><title>CryptexQ Mission Control</title>
+<link rel="stylesheet" href="/static/style.css">
+<script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+</head>
+
+<body>
+<nav class="navbar">
+
+<div class="logo">CryptexQ</div>
+
+<ul class="navLinks">
+
+<li>
+<a href="/"
+style="color:white;text-decoration:none;">
+Home
+</a>
+</li>
+
+<li>
+<a href="/network"
+style="color:#b7c6ff;text-decoration:none;">
+Network
+</a>
+</li>
+
+<li>
+<a href="/security"
+style="color:#b7c6ff;text-decoration:none;">
+Security
+</a>
+</li>
+
+<li>
+<a href="/about"
+style="color:#b7c6ff;text-decoration:none;">
+About
+</a>
+</li>
+
+</ul>
+
+<button class="navBtn">Secure Link</button>
+
+</nav>
+
+
+<section class="hero">
+
+<div class="heroContent">
+
+<h1>Quantum-Safe Aerospace Network</h1>
+
+<p>
+CryptexQ protects aircraft, satellites and ground systems using
+post-quantum encryption and secure relay architecture.
+</p>
+
+<div class="heroButtons">
+<button onclick="start()">Initiate Link</button>
+<button onclick="attack()">Simulate Attack</button>
+</div>
+
+</div>
+
+</section>
+
+<div id="spaceMap"></div>
+<div class="cards">
+
+<div class="card">
+
+<h3>Aircraft Telemetry</h3>
+
+<p id="alt1">Altitude --</p>
+
+<p id="spd1">Speed --</p>
+
+<p id="fuel1">Fuel --</p>
+
+<p id="engine1">Engine --</p>
+
+<p id="heading1">Heading --</p>
+
+<p id="threat1">Threat Level --</p>
+
+</div>
+
+<div class="card">
+<h3>Network Status</h3>
+<p id="status">Idle</p>
+</div>
+
+<div class="card">
+<h3>Ground Control</h3>
+<p id="decrypted">Awaiting telemetry...</p>
+</div>
+
+</div>
+
+
+<div class="metrics">
+
+<div class="metricCard">
+<h3>Packets Sent</h3>
+<p id="packetCount">0</p>
+</div>
+
+<div class="metricCard">
+<h3>Attacks Blocked</h3>
+<p id="attackCount">0</p>
+</div>
+
+<div class="metricCard">
+<h3>Encryption Latency</h3>
+<p id="latency">-- ms</p>
+</div>
+
+<div class="metricCard">
+<h3>Link Integrity</h3>
+<p id="linkStatus">SECURE</p>
+</div>
+<div class="metricCard">
+
+<h3>AI Threat Engine</h3>
+
+<p id="aiStatus">NORMAL</p>
+
+</div>
+</div>
+<!-- Logs -->
+<div class="logs">
+<h2>MISSION SECURITY LOG</h2>
+<div id="logConsole"></div>
+</div>
+
+<script>
+const socket = io("http://127.0.0.1:5050");
+function log(msg){
+const box=document.getElementById("logConsole")
+const line=document.createElement("div")
+
+line.innerText="["+new Date().toLocaleTimeString()+"] "+msg
+
+box.prepend(line)
+}
+let packetsSent = 0
+let attacksBlocked = 0
+
+function start(){
+log("Generating PQC keypair")
+log("Encrypting telemetry packet")
+log("Satellite relay active")
+log("Ground decrypting packet")
+log("Signature verified")
+
+packetsSent++
+
+document.getElementById("packetCount").innerText = packetsSent
+
+let latencyValue = Math.floor(Math.random()*20)+5
+document.getElementById("latency").innerText = latencyValue + " ms"
+
+document.getElementById("linkStatus").innerText = "SECURE"
+document.getElementById("linkStatus").style.color = "#00ffcc"
+beam1.visible = true
+beam2.visible = true
+
+log("Initializing CryptexQ security engine")
+log("Generating hybrid cryptographic key")
+
+
+log("Encrypted telemetry transmitted")
+log("Satellite relay confirmed")
+log("Ground station decrypted packet")
+
+
+/* UPDATE AIRCRAFT TELEMETRY */
+
+let alt = 35000 + Math.random()*2000
+let spd = 800 + Math.random()*100
+let fuel = 70 + Math.random()*30
+
+let heading = Math.floor(Math.random()*360)
+
+document.getElementById("fuel1").innerText =
+"Fuel " + fuel.toFixed(0) + "%"
+
+document.getElementById("engine1").innerText =
+"Engine STABLE"
+
+document.getElementById("heading1").innerText =
+"Heading " + heading + "°"
+
+document.getElementById("threat1").innerText =
+"Threat Level LOW"
+
+document.getElementById("alt1").innerText =
+"Altitude " + alt.toFixed(0) + " ft"
+
+document.getElementById("spd1").innerText =
+"Speed " + spd.toFixed(0) + " km/h"
+
+packet.visible = true
+packetStage = 0
+packet.position.copy(aircraft.position)
+beamMaterial.color.set(0x00ffff)
+}
+
+
+function attack(){
+
+socket.emit("launch_attack")
+
+}
+
+const scene = new THREE.Scene()
+
+const mapWidth = document.getElementById("spaceMap").clientWidth
+const mapHeight = 350
+
+const camera = new THREE.PerspectiveCamera(
+75,
+mapWidth / mapHeight,
+0.1,
+1000
+)
+
+const renderer = new THREE.WebGLRenderer({ antialias:true })
+
+renderer.setSize(mapWidth, mapHeight)
+
+document.getElementById("spaceMap").appendChild(renderer.domElement)
+/* Earth */
+
+const earthGeometry = new THREE.SphereGeometry(5,32,32)
+const textureLoader = new THREE.TextureLoader()
+
+const earthTexture = textureLoader.load(
+"https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/planets/earth_atmos_2048.jpg"
+)
+
+const earthMaterial = new THREE.MeshStandardMaterial({
+map: earthTexture
+})
+const light = new THREE.PointLight(0xffffff,1)
+light.position.set(10,10,10)
+scene.add(light)
+
+const ambient = new THREE.AmbientLight(0x404040)
+scene.add(ambient)
+const earth = new THREE.Mesh(earthGeometry,earthMaterial)
+
+scene.add(earth)
+
+const orbitRadius = 8
+const orbitPoints = []
+
+for(let i=0;i<=64;i++){
+    const angle = (i/64) * Math.PI * 2
+    orbitPoints.push(
+        new THREE.Vector3(
+            Math.cos(angle)*orbitRadius,
+            0,
+            Math.sin(angle)*orbitRadius
+        )
+    )
+}
+
+const orbitGeometry = new THREE.BufferGeometry().setFromPoints(orbitPoints)
+
+const orbitMaterial = new THREE.LineBasicMaterial({
+    color:0x00ffff
+})
+
+const orbit = new THREE.LineLoop(orbitGeometry, orbitMaterial)
+
+earth.add(orbit)
+// ---------- ATMOSPHERIC FLIGHT ROUTE ----------
+
+const routePoints = []
+
+const routeRadius = 6.2
+
+for(let i=0;i<=100;i++){
+
+const angle =
+(i / 100) * Math.PI * 0.9
+
+const x =
+Math.cos(angle) * routeRadius
+
+const z =
+Math.sin(angle) * routeRadius
+
+const y =
+Math.sin(angle) * 1.5
+
+routePoints.push(
+new THREE.Vector3(x,y,z)
+)
+
+}
+
+const routeGeometry =
+new THREE.BufferGeometry().setFromPoints(
+routePoints
+)
+
+const routeMaterial =
+new THREE.LineBasicMaterial({
+
+color:0x66ccff,
+
+transparent:true,
+
+opacity:0.5
+
+})
+
+const flightRoute =
+new THREE.Line(routeGeometry,routeMaterial)
+
+earth.add(flightRoute)
+
+const starGeometry = new THREE.BufferGeometry()
+
+const starCount = 2000
+
+const starPositions = new Float32Array(starCount * 3)
+
+for(let i=0;i<starCount*3;i++){
+    starPositions[i] = (Math.random()-0.5)*1000;
+}
+
+starGeometry.setAttribute(
+'position',
+new THREE.BufferAttribute(starPositions,3)
+)
+
+const starMaterial = new THREE.PointsMaterial({
+color:0xffaa00,
+size:0.7
+})
+
+const stars = new THREE.Points(starGeometry,starMaterial)
+
+scene.add(stars)
+// ---------- FLIGHT CORRIDOR ----------
+
+/* Satellite */
+
+const loader = new THREE.GLTFLoader()
+
+let satellite
+
+const satelliteGeometry = new THREE.BoxGeometry(0.8,0.3,0.8)
+const satelliteMaterial = new THREE.MeshStandardMaterial({color:0xaaaaaa})
+
+satellite = new THREE.Mesh(satelliteGeometry, satelliteMaterial)
+
+earth.add(satellite)
+satellite.position.set(8,0,0)
+
+/* Aircraft */
+
+let aircraft
+
+const aircraftGeometry =
+new THREE.ConeGeometry(0.45,1.4,8)
+const aircraftMaterial = new THREE.MeshStandardMaterial({color:0xffffff})
+
+aircraft = new THREE.Mesh(aircraftGeometry, aircraftMaterial)
+
+aircraft.rotation.x = Math.PI/2
+
+earth.add(aircraft)
+
+aircraft.position.set(0,5.05,0)
+aircraft.rotation.z = Math.PI
+
+/* Ground Station  ← ADD THIS PART HERE */
+
+const groundGeometry = new THREE.BoxGeometry(.15,.15,.15)
+
+const groundMaterial = new THREE.MeshBasicMaterial({
+color:0x00ff00
+})
+
+const ground = new THREE.Mesh(groundGeometry,groundMaterial)
+
+ground.position.set(0,-6,0)
+
+earth.add(ground)
+
+
+camera.position.z = 16
+camera.position.y = 8
+camera.position.x = 4
+camera.lookAt(0,0,0)
+
+let orbitAngle = 0
+
+const beamMaterial = new THREE.LineBasicMaterial({
+color:0x00ffff
+})
+
+const beamGeometry1 = new THREE.BufferGeometry()
+const beamGeometry2 = new THREE.BufferGeometry()
+
+let beam1
+let beam2
+
+beam1 = new THREE.Line(beamGeometry1, beamMaterial)
+beam2 = new THREE.Line(beamGeometry2, beamMaterial)
+
+beam1.visible = false
+beam2.visible = false
+
+scene.add(beam1)
+scene.add(beam2)
+
+// ---------- PACKET OBJECT ----------
+
+let packet
+
+const packetGeometry = new THREE.SphereGeometry(0.15,16,16)
+const packetMaterial = new THREE.MeshBasicMaterial({color:0x00ffff})
+
+packet = new THREE.Mesh(packetGeometry,packetMaterial)
+
+packet.visible = false
+
+scene.add(packet)
+let packetStage = 0
+let flightIndex = 0
+
+function animate(){
+
+requestAnimationFrame(animate)
+earth.rotation.y += 0.002
+
+orbitAngle += 0.004
+// ---------- AIRCRAFT FLIGHT ----------
+
+flightIndex += 0.15
+
+if(flightIndex >= routePoints.length){
+
+flightIndex = 0
+
+}
+
+const currentPoint =
+routePoints[Math.floor(flightIndex)]
+
+const nextPoint =
+routePoints[
+(Math.floor(flightIndex)+1)
+% routePoints.length
+]
+
+aircraft.position.copy(currentPoint)
+
+aircraft.lookAt(nextPoint)
+
+
+
+if(satellite){
+
+satellite.position.x = 8 * Math.cos(orbitAngle)
+satellite.position.z = 8 * Math.sin(orbitAngle)
+
+}
+// ---------- CURVED COMMUNICATION BEAMS ----------
+
+if(aircraft && satellite){
+
+const aircraftWorld = new THREE.Vector3()
+const satelliteWorld = new THREE.Vector3()
+
+aircraft.getWorldPosition(aircraftWorld)
+satellite.getWorldPosition(satelliteWorld)
+
+// Lift midpoint above Earth
+
+const midPoint =
+aircraftWorld.clone()
+.add(satelliteWorld)
+.multiplyScalar(0.5)
+
+midPoint.normalize().multiplyScalar(12)
+
+const curve =
+new THREE.QuadraticBezierCurve3(
+
+aircraftWorld,
+midPoint,
+satelliteWorld
+)
+
+const curvePoints = curve.getPoints(50)
+
+beamGeometry1.setFromPoints(curvePoints)
+
+}
+
+
+
+if(satellite && ground){
+
+const satelliteWorld = new THREE.Vector3()
+const groundWorld = new THREE.Vector3()
+
+satellite.getWorldPosition(satelliteWorld)
+ground.getWorldPosition(groundWorld)
+
+// Lift midpoint
+
+const midPoint =
+satelliteWorld.clone()
+.add(groundWorld)
+.multiplyScalar(0.5)
+
+midPoint.normalize().multiplyScalar(12)
+
+const curve =
+new THREE.QuadraticBezierCurve3(
+
+satelliteWorld,
+midPoint,
+groundWorld
+)
+
+const curvePoints = curve.getPoints(50)
+
+beamGeometry2.setFromPoints(curvePoints)
+
+}
+
+beamMaterial.opacity = 0.5 + Math.sin(Date.now()*0.005)*0.5
+beamMaterial.transparent = true
+renderer.render(scene,camera)
+if(packet.visible){
+
+if(packetStage === 0){
+
+packet.position.lerp(satellite.position,0.05)
+
+if(packet.position.distanceTo(satellite.position) < 0.3){
+packetStage = 1
+}
+
+}
+
+else if(packetStage === 1){
+
+const groundWorld = new THREE.Vector3()
+ground.getWorldPosition(groundWorld)
+
+packet.position.lerp(groundWorld,0.05)
+
+if(packet.position.distanceTo(groundWorld) < 0.3){
+packet.visible = false
+}
+
+}
+
+}
+}
+
+animate()
+socket.on("attack_detected", data => {
+
+log("⚠ External intrusion detected")
+
+beamMaterial.color.set(0xff0000)
+
+attacksBlocked++
+
+document.getElementById("attackCount").innerText =
+attacksBlocked
+
+document.getElementById("aiStatus").innerText =
+data.msg
+
+document.getElementById("aiStatus").style.color =
+"#ff4444"
+
+
+if(data.type === "AI"){
+
+log("⚠ AI anomaly detected")
+
+document.getElementById("status").innerText =
+"AI ANOMALY DETECTED"
+
+document.getElementById("linkStatus").innerText =
+"THREAT DETECTED"
+
+}
+
+
+if(data.type === "MITM"){
+
+log("⚠ MITM attack detected")
+
+document.getElementById("status").innerText =
+"MITM ATTACK DETECTED"
+
+document.getElementById("linkStatus").innerText =
+"THREAT DETECTED"
+
+}
+
+document.getElementById("linkStatus").style.color =
+"#ff4444"
+
+});
+
+
+socket.on("telemetry_spoofed", data => {
+
+log("⚠ Spoofed telemetry received")
+
+// Update telemetry
+document.getElementById("alt1").innerText =
+    "Altitude " + data.altitude + " ft"
+
+document.getElementById("spd1").innerText =
+    "Speed " + data.speed + " km/h"
+document.getElementById("fuel1").innerText =
+"Fuel SENSOR FAILURE"
+
+document.getElementById("engine1").innerText =
+"Engine CRITICAL"
+
+document.getElementById("engine1").style.color =
+"#ff4444"
+
+document.getElementById("heading1").innerText =
+"Heading UNSTABLE"
+
+document.getElementById("threat1").innerText =
+"Threat Level CRITICAL"
+
+document.getElementById("threat1").style.color =
+"#ff0000"
+// Turn beam red
+beamMaterial.color.set(0xff0000)
+
+// Aircraft instability
+aircraft.rotation.z += 1.5
+
+// Abnormal movement
+aircraft.position.y += 1.5
+
+// Threat UI
+document.getElementById("status").innerText =
+    "TELEMETRY SPOOF DETECTED"
+
+document.getElementById("linkStatus").innerText =
+    "CRITICAL"
+
+document.getElementById("linkStatus").style.color =
+    "#ff0000"
+
+document.getElementById("aiStatus").innerText =
+    "ANOMALY DETECTED"
+
+document.getElementById("aiStatus").style.color =
+    "#ff0000"
+
+});
+</script>
+
+</body>
+</html>
